@@ -3,20 +3,23 @@ import Container from './Container';
 import { Avatar, Button } from 'antd';
 import './Footer.css'
 const Footer = (props) => (
-    <div className = 'footer'>
+    <div className='footer'>
         <Container>
-            {props.numberOfStudents ? <Avatar 
-                style = {{
+            {props.numberOfStudents !== undefined ?
+            <Avatar
+                style={{
                     backgroundColor: '#f56a00',
                     marginRight: '5px',
                 }}
-                size = 'large'
-            >{props.numberOfStudents}</Avatar> : null }
-            <Button onClick = {() => props.handleAddStudentClickEvent()}  type = 'primary'>Add new student +</Button>
+                size='large'
+            >{props.numberOfStudents}
+
+            </Avatar> : null}
+            <Button onClick={() => props.handleAddStudentClickEvent()} type='primary'>Add new student +</Button>
         </Container>
 
     </div>
-//
+    //
 
 );
 export default Footer;

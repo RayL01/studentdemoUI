@@ -1,4 +1,4 @@
-import { Avatar, Table, Spin, Modal } from 'antd';
+import { Avatar, Table, Spin, Modal, Empty } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import Container from './Container';
 import './App.css';
@@ -37,6 +37,29 @@ function App() {
       })
       ;
   };
+  const commonElements = () => (
+    <div>
+      <Modal
+          title='Add new student'
+          open={isAddStudentModalVisible}
+          onOk={() => setIsAddStudentModalVisible(false)}
+          onCancel={() => setIsAddStudentModalVisible(false)}
+          width={1000}>
+          <h1>Hello with my modal</h1>
+          <AddStudentForm
+            onSuccess={() => {
+              setIsAddStudentModalVisible(false);
+              fetchStudents();
+            }}
+
+          />
+        </Modal>
+        <Footer
+          numberOfStudents={students.length}
+          handleAddStudentClickEvent={() => setIsAddStudentModalVisible(true)}>
+        </Footer>
+    </div>
+  );
 
   if (isFetching) {
     return (
@@ -87,31 +110,7 @@ function App() {
     return (
       <Container>
         {contextHolder}
-        <Table
-          style={{ marginBottom: '8em' }}
-          dataSource={students}
-          columns={columns}
-          rowKey='studentId'
-          pagination={false} />
-        <Modal
-          title='Add new student'
-          open={isAddStudentModalVisible}
-          onOk={() => setIsAddStudentModalVisible(false)}
-          onCancel={() => setIsAddStudentModalVisible(false)}
-          width={1000}>
-          <h1>Hello with my modal</h1>
-          <AddStudentForm
-            onSuccess={() => {
-              setIsAddStudentModalVisible(false);
-              fetchStudents();
-            }}
-
-          />
-        </Modal>
-        <Footer
-          numberOfStudents={students.length}
-          handleAddStudentClickEvent={() => setIsAddStudentModalVisible(true)}>
-        </Footer>
+        {commonElements()}
       </Container>
 
     );
@@ -124,9 +123,13 @@ function App() {
   return (
     <Container>
       {contextHolder}
-      <h1>No students available.</h1>
+      <Empty description={
+        <h1>No students available.</h1>
+      }
+      />
+      {commonElements()}
     </Container>
-   
+
   );
 
 
