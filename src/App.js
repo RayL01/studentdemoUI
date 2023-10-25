@@ -37,6 +37,8 @@ function App() {
       })
       ;
   };
+
+  //this is a common element for a footer adding new students
   const commonElements = () => (
     <div>
       <Modal
@@ -50,6 +52,11 @@ function App() {
             onSuccess={() => {
               setIsAddStudentModalVisible(false);
               fetchStudents();
+            }}
+            onFailure={(error) => {
+              const message = error.error.message;
+              const description = error.error.httpStatus;
+              openNotificationWithIcon('error', message, description);
             }}
 
           />
@@ -109,7 +116,14 @@ function App() {
     ];
     return (
       <Container>
+        
         {contextHolder}
+        <Table
+          style={{ marginBottom: '8em' }}
+          dataSource={students}
+          columns={columns}
+          rowKey='studentId'
+          pagination={false} />
         {commonElements()}
       </Container>
 
